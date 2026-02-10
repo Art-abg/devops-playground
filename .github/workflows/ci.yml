@@ -29,16 +29,37 @@ jobs:
     - name: Build
       run: npm run build
 
-    - name: Build Docker Image
-      run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_USERNAME }}/devops-proj-1:latest
+    - name: Build and Push Docker Image
+      run: |
+        docker build . --file Dockerfile --tag ${{ secrets.DOCKER_USERNAME }}/devops-playground:latest --tag ${{ secrets.DOCKER_USERNAME }}/devops-playground:${{ github.sha }}
+        docker push ${{ secrets.DOCKER_USERNAME }}/devops-playground:latest
+        docker push ${{ secrets.DOCKER_USERNAME }}/devops-playground:${{ github.sha }}
 
-    - name: Log in to Docker Hub
-      if: github.ref == 'refs/heads/main'
-      uses: docker/login-action@v3
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-
-    - name: Push to Docker Hub
-      if: github.ref == 'refs/heads/main'
-      run: docker push ${{ secrets.DOCKER_USERNAME }}/devops-proj-1:latest
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to EC2 via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ec2-user
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            # Login to Docker Hub (required if repo is private, good practice regardless)
+            echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+            
+            # Stop and remove old container
+            docker stop web-app || true
+            docker rm web-app || true
+            
+            # Pull latest image
+            docker pull ${{ secrets.DOCKER_USERNAME }}/devops-playground:latest
+            
+            # Run new container
+            docker run -d \
+              --name web-app \
+              --restart unless-stopped \
+              -p 80:80 \
+              ${{ secrets.DOCKER_USERNAME }}/devops-playground:latest
