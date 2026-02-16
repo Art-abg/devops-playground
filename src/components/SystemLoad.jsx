@@ -1,40 +1,50 @@
-import { useEffect, useState } from 'react';
+/* eslint-disable react/prop-types */
 import './SystemLoad.css';
 
-const SystemLoad = () => {
-  const [loadHistory, setLoadHistory] = useState(new Array(20).fill(10));
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setLoadHistory(prev => {
-        const newLoad = Math.floor(Math.random() * 40) + 10; // Random load 10-50%
-        return [...prev.slice(1), newLoad];
-      });
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
+const SystemLoad = ({ languages = [] }) => {
+  // Show language breakdown as bars instead of random CPU data
+  const maxPct = languages.length > 0 ? Math.max(...languages.map(l => parseFloat(l.percentage))) : 100;
 
   return (
     <div className="system-load-container">
-      <h3>SYSTEM_LOAD_METRICS</h3>
-      <div className="chart-wrapper">
-        <div className="bars">
-          {loadHistory.map((load, i) => (
-            <div 
-              key={i} 
-              className="bar" 
-              style={{ height: `${load}%` }}
-              title={`Load: ${load}%`}
-            />
-          ))}
-        </div>
-        <div className="chart-overlay"></div>
-      </div>
-      <div className="metrics-row">
-        <span>CPU: {loadHistory[loadHistory.length - 1]}%</span>
-        <span>MEM: 2.4GB / 8GB</span>
-        <span className="network-activity">NET: ↑ 24KB/s</span>
-      </div>
+      <h3>REPO LANGUAGE BREAKDOWN</h3>
+      {languages.length > 0 ? (
+        <>
+          <div className="chart-wrapper">
+            <div className="bars">
+              {languages.map((lang, i) => (
+                <div
+                  key={lang.name}
+                  className="bar"
+                  style={{ 
+                    height: `${(parseFloat(lang.percentage) / maxPct) * 95}%`,
+                    animationDelay: `${i * 100}ms`,
+                  }}
+                  title={`${lang.name}: ${lang.percentage}%`}
+                />
+              ))}
+            </div>
+          </div>
+          <div className="metrics-row">
+            {languages.slice(0, 3).map((lang) => (
+              <span key={lang.name}>{lang.name}: {lang.percentage}%</span>
+            ))}
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="chart-wrapper">
+            <div className="bars">
+              {Array.from({ length: 8 }, (_, i) => (
+                <div key={i} className="bar placeholder-bar" style={{ height: `${20 + i * 8}%` }} />
+              ))}
+            </div>
+          </div>
+          <div className="metrics-row">
+            <span>Loading language data...</span>
+          </div>
+        </>
+      )}
     </div>
   );
 };

@@ -1,0 +1,260 @@
+/* ===== MONITOR PAGE ===== */
+.monitor-page {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.monitor-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.monitor-header h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  background: var(--gradient-brand);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.4rem;
+}
+
+.monitor-header p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.monitor-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Stats */
+.monitor-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+}
+
+.stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  text-align: center;
+  backdrop-filter: var(--blur-glass);
+  transition: border-color var(--transition-default);
+}
+
+.stat-card:hover {
+  border-color: var(--border-hover);
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  background: var(--gradient-brand);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.25rem;
+}
+
+.stat-label {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+/* Sections */
+.monitor-section {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  backdrop-filter: var(--blur-glass);
+}
+
+.monitor-section h3 {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 2rem;
+  font-size: 0.9rem;
+}
+
+/* Commit Feed */
+.commit-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.commit-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 0.75rem;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition-fast);
+  text-decoration: none;
+  color: inherit;
+  gap: 1rem;
+}
+
+.commit-row:hover {
+  background: var(--bg-elevated);
+}
+
+.commit-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.commit-sha {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--accent-purple);
+  flex-shrink: 0;
+}
+
+.commit-message {
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.commit-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-shrink: 0;
+  font-size: 0.75rem;
+}
+
+.commit-author {
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+}
+
+.commit-time {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+/* Deploy Timeline */
+.deploy-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.deploy-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition-fast);
+  text-decoration: none;
+  color: inherit;
+}
+
+.deploy-item:hover {
+  background: var(--bg-elevated);
+}
+
+.deploy-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.deploy-dot.success { background: var(--accent-green); box-shadow: 0 0 6px var(--accent-green); }
+.deploy-dot.failure { background: var(--accent-red); box-shadow: 0 0 6px var(--accent-red); }
+.deploy-dot.processing { background: var(--accent-amber); }
+.deploy-dot.pending { background: var(--text-muted); }
+
+.deploy-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.deploy-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.deploy-number {
+  color: var(--text-muted);
+  font-weight: 400;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+.deploy-detail {
+  font-size: 0.7rem;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.deploy-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.2rem;
+  flex-shrink: 0;
+}
+
+.deploy-status {
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 100px;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.deploy-status.success { background: rgba(52, 211, 153, 0.12); color: var(--accent-green); }
+.deploy-status.failure { background: rgba(248, 113, 113, 0.12); color: var(--accent-red); }
+.deploy-status.processing { background: rgba(251, 191, 36, 0.12); color: var(--accent-amber); }
+.deploy-status.pending { background: rgba(148, 163, 184, 0.1); color: var(--text-muted); }
+
+.deploy-time {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+@media (max-width: 768px) {
+  .commit-right {
+    display: none;
+  }
+  
+  .deploy-meta {
+    display: none;
+  }
+}

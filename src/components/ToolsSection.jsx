@@ -4,6 +4,9 @@ import ChmodCalculator from './tools/ChmodCalculator';
 import DockerfileGenerator from './tools/DockerfileGenerator';
 import JsonYamlConverter from './tools/JsonYamlConverter';
 import Base64Helper from './tools/Base64Helper';
+import RegexTester from './tools/RegexTester';
+import PasswordGenerator from './tools/PasswordGenerator';
+import HttpReference from './tools/HttpReference';
 import './ToolsSection.css';
 
 const ToolsSection = () => {
@@ -17,9 +20,12 @@ const ToolsSection = () => {
         <CidrCalculator />
         <CronGenerator />
         <ChmodCalculator />
+        <RegexTester />
+        <PasswordGenerator />
         <DockerfileGenerator />
         <JsonYamlConverter />
         <Base64Helper />
+        <HttpReference />
       </div>
     </div>
   );
