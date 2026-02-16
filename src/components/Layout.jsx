@@ -2,14 +2,24 @@
 import './Layout.css';
 import Terminal from './Terminal';
 
-const Layout = ({ children }) => {
+const Layout = ({ children, activeTab, onTabChange }) => {
   return (
     <div className="layout-container">
       <header className="layout-header">
         <div className="logo-glitch" data-text="DEVOPS_PLAYGROUND">DEVOPS_PLAYGROUND</div>
         <nav className="layout-nav">
-          <span className="nav-item active">DASHBOARD</span>
-          <span className="nav-item">LOGS</span>
+          <span 
+            className={`nav-item ${activeTab === 'dashboard' ? 'active' : ''}`}
+            onClick={() => onTabChange('dashboard')}
+          >
+            DASHBOARD
+          </span>
+          <span 
+            className={`nav-item ${activeTab === 'tools' ? 'active' : ''}`}
+            onClick={() => onTabChange('tools')}
+          >
+            TOOLKIT
+          </span>
           <span className="nav-item">SETTINGS</span>
         </nav>
         <div className="user-status">

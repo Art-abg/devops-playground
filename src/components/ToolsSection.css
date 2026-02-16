@@ -1,0 +1,21 @@
+.tools-section {
+  padding: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.tools-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.tools-header h2 {
+  color: #00ff41;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
