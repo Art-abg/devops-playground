@@ -1,0 +1,77 @@
+.terminal-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Consolas', 'Monaco', monospace;
+  font-size: 0.85rem;
+}
+
+.terminal-header {
+  background: #1a1a1a;
+  padding: 0.25rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #333;
+}
+
+.terminal-title {
+  color: #888;
+  font-size: 0.75rem;
+}
+
+.terminal-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.control {
+  cursor: pointer;
+  color: #666;
+  font-size: 0.75rem;
+}
+
+.control:hover {
+  color: #fff;
+}
+
+.terminal-body {
+  flex: 1;
+  background: #050505;
+  padding: 1rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.terminal-line {
+  display: flex;
+  gap: 1rem;
+  line-height: 1.4;
+}
+
+.timestamp {
+  color: #555;
+  min-width: 80px;
+}
+
+.terminal-line.info .content { color: #ccc; }
+.terminal-line.success .content { color: #00ff41; }
+.terminal-line.warning .content { color: #ffb700; }
+.terminal-line.error .content { color: #ff0000; }
+
+.terminal-input-line {
+  margin-top: 0.5rem;
+  display: flex;
+  gap: 0.5rem;
+  color: #00ff41;
+}
+
+.cursor {
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}

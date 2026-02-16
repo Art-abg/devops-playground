@@ -1,3 +1,13 @@
+data "aws_ami" "amazon_linux_2023" {
+  most_recent = true
+  owners      = ["amazon"]
+
+  filter {
+    name   = "name"
+    values = ["al2023-ami-2023*-x86_64"]
+  }
+}
+
 resource "aws_security_group" "web_sg" {
   name        = "web-server-sg"
   description = "Allow HTTP and SSH"
@@ -29,7 +39,7 @@ resource "aws_security_group" "web_sg" {
 }
 
 resource "aws_instance" "web_server" {
-  ami           = "ami-0eddbd81024d59ff2" # Amazon Linux 2023 AMI in eu-central-1
+  ami           = data.aws_ami.amazon_linux_2023.id
   instance_type = var.instance_type
   key_name      = var.key_name
 

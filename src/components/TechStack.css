@@ -1,0 +1,35 @@
+.tech-stack-container {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid #333;
+  padding: 1rem;
+  border-radius: 8px;
+  color: #fff;
+  margin-top: 1rem;
+}
+
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.tech-card {
+  padding: 1rem;
+  background: #111;
+  border: 1px solid #333;
+  border-radius: 4px;
+  text-align: center;
+  transition: all 0.3s;
+  cursor: default;
+}
+
+.tech-card:hover {
+  transform: scale(1.05);
+  background: #1a1a1a;
+}
+
+.tech-name {
+  font-weight: bold;
+  font-size: 0.9rem;
+}

@@ -1,3 +1,4 @@
+/*
 terraform {
   backend "s3" {
     bucket         = "artur-abg-terraform-state"
@@ -7,3 +8,4 @@ terraform {
     encrypt        = true
   }
 }
+*/

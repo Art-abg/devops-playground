@@ -1,35 +1,36 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import Layout from './components/Layout'
+import ArchitectureDiagram from './components/ArchitectureDiagram'
+import PipelineVisualizer from './components/PipelineVisualizer'
+import TechStack from './components/TechStack'
 import './App.css'
 
-// Main application component
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <Layout>
+      <div className="dashboard-grid">
+        <div className="dashboard-section hero">
+          <h1>DEVOPS_PROJECT_01</h1>
+          <p className="subtitle">Containerized React App on AWS EC2 via Terraform</p>
+          <div className="status-badges">
+            <span className="badge success">BUILD: PASSING</span>
+            <span className="badge success">DEPLOY: SUCCESS</span>
+            <span className="badge warning">UPTIME: 99.9%</span>
+          </div>
+        </div>
+
+        <div className="dashboard-section architecture">
+          <ArchitectureDiagram />
+        </div>
+
+        <div className="dashboard-section pipeline">
+          <PipelineVisualizer />
+        </div>
+
+        <div className="dashboard-section tech">
+          <TechStack />
+        </div>
       </div>
-      <h1>Vite + React + DevOps</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </Layout>
   )
 }
 

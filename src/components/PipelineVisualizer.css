@@ -1,0 +1,76 @@
+.pipeline-container {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid #333;
+  padding: 1rem;
+  border-radius: 8px;
+  color: #fff;
+  margin-top: 1rem;
+}
+
+.pipeline-flow {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: 1rem;
+}
+
+.pipeline-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  border: 1px solid #333;
+  border-radius: 8px;
+  background: #111;
+  min-width: 120px;
+  transition: all 0.3s;
+}
+
+.pipeline-step:hover {
+  transform: translateY(-5px);
+  border-color: #00ff41;
+  box-shadow: 0 5px 15px rgba(0, 255, 65, 0.2);
+}
+
+.step-icon {
+  font-size: 2rem;
+}
+
+.step-label {
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.step-status {
+  font-size: 0.75rem;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+.step-status.success {
+  background: rgba(0, 255, 65, 0.2);
+  color: #00ff41;
+}
+
+.step-status.processing {
+  background: rgba(255, 183, 0, 0.2);
+  color: #ffb700;
+  animation: pulse 1.5s infinite;
+}
+
+.step-status.pending {
+  background: rgba(255, 255, 255, 0.1);
+  color: #888;
+}
+
+.pipeline-arrow {
+  color: #333;
+  font-size: 1.5rem;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}

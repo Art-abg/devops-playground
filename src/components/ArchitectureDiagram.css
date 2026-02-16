@@ -1,0 +1,106 @@
+.arch-diagram-container {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid #333;
+  padding: 1rem;
+  border-radius: 8px;
+  color: #fff;
+}
+
+.arch-grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.arch-group {
+  border: 1px dashed #555;
+  padding: 1rem;
+  border-radius: 4px;
+  position: relative;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.arch-group.aws { border-color: #ff9900; }
+.arch-group.vpc { border-color: #00ff41; margin-top: 1rem; }
+.arch-group.subnet { border-color: #00aaff; margin-top: 1rem; }
+.arch-group.sg { border-color: #ff0055; margin-top: 1rem; }
+
+.group-label {
+  position: absolute;
+  top: -10px;
+  left: 10px;
+  background: #0a0a0a;
+  padding: 0 5px;
+  font-size: 0.7rem;
+  color: #888;
+}
+
+.arch-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border: 1px solid #333;
+  border-radius: 4px;
+  background: #111;
+  position: relative;
+}
+
+.arch-node.user {
+  animation: pulse-user 2s infinite;
+}
+
+.arch-node.ec2 {
+  min-width: 120px;
+}
+
+.arch-node.docker {
+  margin-top: 0.5rem;
+  border-color: #0db7ed;
+  width: 100%;
+}
+
+.node-icon {
+  font-size: 1.5rem;
+}
+
+.node-label {
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.node-status {
+  font-size: 0.6rem;
+  padding: 2px 4px;
+  border-radius: 2px;
+}
+
+.node-status.active {
+  background: #00ff41;
+  color: #000;
+}
+
+.connection-line {
+  position: absolute;
+  right: -2rem;
+  top: 50%;
+  width: 2rem;
+  height: 2px;
+  background: #00ff41;
+  animation: flow 1s linear infinite;
+}
+
+@keyframes flow {
+  0% { opacity: 0.2; }
+  50% { opacity: 1; }
+  100% { opacity: 0.2; }
+}
+
+@keyframes pulse-user {
+  0% { box-shadow: 0 0 0 0 rgba(0, 255, 65, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(0, 255, 65, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 255, 65, 0); }
+}
