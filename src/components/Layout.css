@@ -5,7 +5,26 @@
   background-color: #0a0a0a;
   color: #00ff41;
   font-family: 'Courier New', Courier, monospace;
-  overflow: hidden;
+  overflow: hidden; /* Prevent double scrollbars */
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0a; 
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333; 
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00ff41; 
 }
 
 .layout-header {
@@ -35,13 +54,26 @@
 
 .nav-item {
   cursor: pointer;
-  opacity: 0.7;
+  opacity: 0.6;
   transition: all 0.3s;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  border: 1px solid transparent;
 }
 
-.nav-item:hover, .nav-item.active {
+.nav-item:hover {
   opacity: 1;
-  text-shadow: 0 0 10px #00ff41;
+  color: #fff;
+  border-color: #333;
+}
+
+.nav-item.active {
+  opacity: 1;
+  color: #00ff41;
+  border-color: #00ff41;
+  background: rgba(0, 255, 65, 0.05);
+  box-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
+  text-shadow: 0 0 5px #00ff41;
 }
 
 .user-status {

@@ -1,0 +1,54 @@
+.system-load-container {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid #333;
+  padding: 1rem;
+  border-radius: 8px;
+  color: #fff;
+  margin-top: 2rem; /* Spacing from hero */
+}
+
+.system-load-container h3 {
+  margin: 0 0 1rem 0;
+  font-size: 0.9rem;
+  color: #888;
+  font-family: 'Courier New', monospace;
+}
+
+.chart-wrapper {
+  height: 100px;
+  position: relative;
+  background: #050505;
+  border-bottom: 1px solid #333;
+  overflow: hidden;
+}
+
+.bars {
+  display: flex;
+  align-items: flex-end;
+  height: 100%;
+  gap: 2px;
+}
+
+.bar {
+  flex: 1;
+  background: #00ff41;
+  opacity: 0.6;
+  transition: height 0.3s ease;
+}
+
+.bar:hover {
+  opacity: 1;
+}
+
+.metrics-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+  font-family: monospace;
+  font-size: 0.8rem;
+  color: #00ff41;
+}
+
+.network-activity {
+  animation: blink 2s infinite;
+}

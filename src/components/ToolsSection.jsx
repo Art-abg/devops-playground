@@ -1,6 +1,9 @@
 import CidrCalculator from './tools/CidrCalculator';
 import CronGenerator from './tools/CronGenerator';
 import ChmodCalculator from './tools/ChmodCalculator';
+import DockerfileGenerator from './tools/DockerfileGenerator';
+import JsonYamlConverter from './tools/JsonYamlConverter';
+import Base64Helper from './tools/Base64Helper';
 import './ToolsSection.css';
 
 const ToolsSection = () => {
@@ -14,6 +17,9 @@ const ToolsSection = () => {
         <CidrCalculator />
         <CronGenerator />
         <ChmodCalculator />
+        <DockerfileGenerator />
+        <JsonYamlConverter />
+        <Base64Helper />
       </div>
     </div>
   );

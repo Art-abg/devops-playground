@@ -4,6 +4,7 @@ import ArchitectureDiagram from './components/ArchitectureDiagram'
 import PipelineVisualizer from './components/PipelineVisualizer'
 import TechStack from './components/TechStack'
 import ToolsSection from './components/ToolsSection'
+import SystemLoad from './components/SystemLoad'
 import './App.css'
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
               <span className="badge success">DEPLOY: SUCCESS</span>
               <span className="badge warning">UPTIME: 99.9%</span>
             </div>
+            <SystemLoad />
           </div>
 
           <div className="dashboard-section architecture">
