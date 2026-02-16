@@ -1,9 +1,15 @@
+/* ===== ARCHITECTURE DIAGRAM ===== */
 .arch-diagram-container {
-  background: rgba(0, 0, 0, 0.5);
-  border: 1px solid #333;
-  padding: 1rem;
-  border-radius: 8px;
-  color: #fff;
+  color: var(--text-primary);
+}
+
+.arch-diagram-container h3 {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  margin-bottom: 1.25rem;
 }
 
 .arch-grid {
@@ -11,55 +17,63 @@
   align-items: center;
   justify-content: center;
   gap: 2rem;
-  margin-top: 1rem;
+  flex-wrap: wrap;
 }
 
 .arch-group {
-  border: 1px dashed #555;
-  padding: 1rem;
-  border-radius: 4px;
+  border: 1px dashed var(--border-default);
+  padding: 1.25rem;
+  border-radius: var(--radius-md);
   position: relative;
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(255, 255, 255, 0.01);
 }
 
-.arch-group.aws { border-color: #ff9900; }
-.arch-group.vpc { border-color: #00ff41; margin-top: 1rem; }
-.arch-group.subnet { border-color: #00aaff; margin-top: 1rem; }
-.arch-group.sg { border-color: #ff0055; margin-top: 1rem; }
+.arch-group.aws { border-color: rgba(255, 153, 0, 0.4); }
+.arch-group.vpc { border-color: rgba(34, 211, 238, 0.3); margin-top: 1rem; }
+.arch-group.subnet { border-color: rgba(59, 130, 246, 0.3); margin-top: 1rem; }
+.arch-group.sg { border-color: rgba(248, 113, 113, 0.3); margin-top: 1rem; }
 
 .group-label {
   position: absolute;
   top: -10px;
-  left: 10px;
-  background: #0a0a0a;
-  padding: 0 5px;
-  font-size: 0.7rem;
-  color: #888;
+  left: 12px;
+  background: var(--bg-primary);
+  padding: 0 6px;
+  font-size: 0.65rem;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
 }
 
 .arch-node {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem;
-  border: 1px solid #333;
-  border-radius: 4px;
-  background: #111;
+  gap: 0.4rem;
+  padding: 0.75rem;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  background: var(--bg-secondary);
   position: relative;
+  transition: border-color var(--transition-default), box-shadow var(--transition-default);
+}
+
+.arch-node:hover {
+  border-color: var(--border-hover);
+  box-shadow: var(--shadow-sm);
 }
 
 .arch-node.user {
-  animation: pulse-user 2s infinite;
+  animation: pulseGlow 2.5s ease-in-out infinite;
 }
 
 .arch-node.ec2 {
-  min-width: 120px;
+  min-width: 130px;
 }
 
 .arch-node.docker {
   margin-top: 0.5rem;
-  border-color: #0db7ed;
+  border-color: rgba(59, 130, 246, 0.3);
   width: 100%;
 }
 
@@ -68,19 +82,23 @@
 }
 
 .node-label {
-  font-size: 0.8rem;
-  font-weight: bold;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
 }
 
 .node-status {
   font-size: 0.6rem;
-  padding: 2px 4px;
-  border-radius: 2px;
+  padding: 2px 8px;
+  border-radius: 100px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }
 
 .node-status.active {
-  background: #00ff41;
-  color: #000;
+  background: rgba(52, 211, 153, 0.15);
+  color: var(--accent-green);
 }
 
 .connection-line {
@@ -89,18 +107,18 @@
   top: 50%;
   width: 2rem;
   height: 2px;
-  background: #00ff41;
-  animation: flow 1s linear infinite;
+  background: var(--gradient-brand);
+  animation: flowLine 1.5s ease-in-out infinite;
 }
 
-@keyframes flow {
+@keyframes flowLine {
   0% { opacity: 0.2; }
-  50% { opacity: 1; }
+  50% { opacity: 0.8; }
   100% { opacity: 0.2; }
 }
 
-@keyframes pulse-user {
-  0% { box-shadow: 0 0 0 0 rgba(0, 255, 65, 0.4); }
-  70% { box-shadow: 0 0 0 10px rgba(0, 255, 65, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(0, 255, 65, 0); }
+@keyframes pulseGlow {
+  0% { box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.25); }
+  70% { box-shadow: 0 0 0 10px rgba(34, 211, 238, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(34, 211, 238, 0); }
 }

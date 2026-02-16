@@ -1,77 +1,94 @@
+/* ===== TERMINAL ===== */
 .terminal-container {
   height: 100%;
   display: flex;
   flex-direction: column;
-  font-family: 'Consolas', 'Monaco', monospace;
-  font-size: 0.85rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  background: var(--bg-primary);
 }
 
 .terminal-header {
-  background: #1a1a1a;
-  padding: 0.25rem 1rem;
+  background: var(--bg-secondary);
+  padding: 0.4rem 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #333;
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 .terminal-title {
-  color: #888;
-  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
 }
 
 .terminal-controls {
   display: flex;
-  gap: 0.5rem;
+  gap: 6px;
 }
 
 .control {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
   cursor: pointer;
-  color: #666;
-  font-size: 0.75rem;
+  transition: opacity var(--transition-fast);
+  opacity: 0.8;
 }
 
 .control:hover {
-  color: #fff;
+  opacity: 1;
 }
+
+.control.minimize { background: var(--accent-amber); }
+.control.maximize { background: var(--accent-green); }
+.control.close { background: var(--accent-red); }
 
 .terminal-body {
   flex: 1;
-  background: #050505;
-  padding: 1rem;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 0.75rem 1rem;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.15rem;
 }
 
 .terminal-line {
   display: flex;
-  gap: 1rem;
-  line-height: 1.4;
+  gap: 0.75rem;
+  line-height: 1.5;
 }
 
 .timestamp {
-  color: #555;
-  min-width: 80px;
+  color: var(--text-muted);
+  min-width: 75px;
+  font-size: 0.7rem;
 }
 
-.terminal-line.info .content { color: #ccc; }
-.terminal-line.success .content { color: #00ff41; }
-.terminal-line.warning .content { color: #ffb700; }
-.terminal-line.error .content { color: #ff0000; }
+.terminal-line.info .content { color: var(--text-secondary); }
+.terminal-line.success .content { color: var(--accent-green); }
+.terminal-line.warning .content { color: var(--accent-amber); }
+.terminal-line.error .content { color: var(--accent-red); }
 
 .terminal-input-line {
   margin-top: 0.5rem;
   display: flex;
   gap: 0.5rem;
-  color: #00ff41;
+  color: var(--accent-cyan);
+}
+
+.prompt {
+  color: var(--accent-cyan);
 }
 
 .cursor {
-  animation: blink 1s step-end infinite;
+  animation: cursorBlink 1s step-end infinite;
+  color: var(--text-primary);
 }
 
-@keyframes blink {
+@keyframes cursorBlink {
   50% { opacity: 0; }
 }

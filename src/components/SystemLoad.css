@@ -1,25 +1,29 @@
+/* ===== SYSTEM LOAD ===== */
 .system-load-container {
-  background: rgba(0, 0, 0, 0.5);
-  border: 1px solid #333;
-  padding: 1rem;
-  border-radius: 8px;
-  color: #fff;
-  margin-top: 2rem; /* Spacing from hero */
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  padding: 1.25rem;
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  margin-top: 2rem;
 }
 
 .system-load-container h3 {
-  margin: 0 0 1rem 0;
-  font-size: 0.9rem;
-  color: #888;
-  font-family: 'Courier New', monospace;
+  margin: 0 0 0.75rem 0;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  letter-spacing: 1px;
 }
 
 .chart-wrapper {
-  height: 100px;
+  height: 80px;
   position: relative;
-  background: #050505;
-  border-bottom: 1px solid #333;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: var(--radius-sm);
   overflow: hidden;
+  border: 1px solid var(--border-subtle);
 }
 
 .bars {
@@ -27,28 +31,30 @@
   align-items: flex-end;
   height: 100%;
   gap: 2px;
+  padding: 4px;
 }
 
 .bar {
   flex: 1;
-  background: #00ff41;
-  opacity: 0.6;
-  transition: height 0.3s ease;
+  background: var(--gradient-brand);
+  opacity: 0.5;
+  border-radius: 2px 2px 0 0;
+  transition: height 0.4s ease;
 }
 
 .bar:hover {
-  opacity: 1;
+  opacity: 0.9;
 }
 
 .metrics-row {
   display: flex;
   justify-content: space-between;
-  margin-top: 0.5rem;
-  font-family: monospace;
-  font-size: 0.8rem;
-  color: #00ff41;
+  margin-top: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
 }
 
 .network-activity {
-  animation: blink 2s infinite;
+  color: var(--accent-cyan);
 }

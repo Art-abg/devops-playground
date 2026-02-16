@@ -1,7 +1,8 @@
+/* ===== DASHBOARD GRID ===== */
 .dashboard-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 2rem;
+  gap: 1.5rem;
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -10,56 +11,102 @@
   .dashboard-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  
-  .dashboard-section.hero {
-    grid-column: span 2;
-  }
 
+  .dashboard-section.hero,
   .dashboard-section.pipeline {
     grid-column: span 2;
   }
 }
 
+/* ===== HERO ===== */
 .dashboard-section.hero {
   text-align: center;
-  border-bottom: 1px solid #333;
-  padding-bottom: 2rem;
+  padding: 3rem 2rem;
+  background: var(--gradient-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  position: relative;
+  overflow: hidden;
+}
+
+.dashboard-section.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--gradient-brand);
+  opacity: 0.6;
 }
 
 h1 {
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 3rem;
-  color: #fff;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  font-family: var(--font-sans);
+  font-size: 2.5rem;
+  font-weight: 700;
+  background: var(--gradient-brand);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   margin-bottom: 0.5rem;
+  letter-spacing: -0.5px;
 }
 
 .subtitle {
-  color: #888;
-  font-size: 1.2rem;
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  font-weight: 400;
   margin-bottom: 1.5rem;
 }
 
+/* ===== STATUS BADGES ===== */
 .status-badges {
   display: flex;
   justify-content: center;
-  gap: 1rem;
+  gap: 0.75rem;
+  flex-wrap: wrap;
 }
 
 .badge {
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  font-weight: bold;
-  font-size: 0.9rem;
-  border: 1px solid currentColor;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: 100px;
+  font-weight: 600;
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  letter-spacing: 0.5px;
+  border: 1px solid;
 }
 
 .badge.success {
-  color: #00ff41;
-  background: rgba(0, 255, 65, 0.1);
+  color: var(--accent-green);
+  background: rgba(52, 211, 153, 0.1);
+  border-color: rgba(52, 211, 153, 0.2);
 }
 
 .badge.warning {
-  color: #ffb700;
-  background: rgba(255, 183, 0, 0.1);
+  color: var(--accent-amber);
+  background: rgba(251, 191, 36, 0.1);
+  border-color: rgba(251, 191, 36, 0.2);
+}
+
+/* ===== DASHBOARD CARDS (generic) ===== */
+.dashboard-section.architecture,
+.dashboard-section.pipeline,
+.dashboard-section.tech {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  backdrop-filter: var(--blur-glass);
+  transition: border-color var(--transition-default), box-shadow var(--transition-default);
+}
+
+.dashboard-section.architecture:hover,
+.dashboard-section.pipeline:hover,
+.dashboard-section.tech:hover {
+  border-color: var(--border-hover);
+  box-shadow: var(--shadow-md);
 }

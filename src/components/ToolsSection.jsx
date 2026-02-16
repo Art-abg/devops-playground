@@ -10,8 +10,8 @@ const ToolsSection = () => {
   return (
     <div className="tools-section">
       <div className="tools-header">
-        <h2>DEVOPS_TOOLKIT</h2>
-        <p>Essential utilities for system administration and engineering.</p>
+        <h2>DevOps Toolkit</h2>
+        <p>Essential utilities for system administration and infrastructure engineering.</p>
       </div>
       <div className="tools-grid">
         <CidrCalculator />

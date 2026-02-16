@@ -14,7 +14,6 @@ const Terminal = () => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [lines]);
 
-  // Simulate random incoming logs
   useEffect(() => {
     const interval = setInterval(() => {
       const messages = [
@@ -22,10 +21,12 @@ const Terminal = () => {
         { type: 'info', text: 'Scraping metrics from Prometheus...' },
         { type: 'success', text: 'GET /api/v1/health 200 45ms' },
         { type: 'info', text: 'Auto-scaling group capacity: 1/1' },
+        { type: 'success', text: 'Container health: healthy (uptime 14d 6h)' },
+        { type: 'info', text: 'SSL cert valid: 89 days remaining' },
       ];
       const randomMsg = messages[Math.floor(Math.random() * messages.length)];
-      if (Math.random() > 0.7) {
-        setLines(prev => [...prev.slice(-10), randomMsg]);
+      if (Math.random() > 0.6) {
+        setLines(prev => [...prev.slice(-15), randomMsg]);
       }
     }, 3000);
     return () => clearInterval(interval);
@@ -34,11 +35,11 @@ const Terminal = () => {
   return (
     <div className="terminal-container">
       <div className="terminal-header">
-        <span className="terminal-title">TERMINAL_OUTPUT</span>
+        <span className="terminal-title">TERMINAL OUTPUT</span>
         <div className="terminal-controls">
-          <span className="control minimize">_</span>
-          <span className="control maximize">[]</span>
-          <span className="control close">X</span>
+          <span className="control minimize" />
+          <span className="control maximize" />
+          <span className="control close" />
         </div>
       </div>
       <div className="terminal-body">
@@ -49,8 +50,8 @@ const Terminal = () => {
           </div>
         ))}
         <div className="terminal-input-line">
-          <span className="prompt">admin@devops-playground:~$</span>
-          <span className="cursor">_</span>
+          <span className="prompt">admin@devops ~$</span>
+          <span className="cursor">▋</span>
         </div>
         <div ref={bottomRef} />
       </div>
