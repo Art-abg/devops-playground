@@ -2,11 +2,6 @@
 
 A high-performance, professional DevOps portfolio application showcasing real-time infrastructure metrics, CI/CD visibility, and essential engineering utilities. Built with a modern glassmorphism aesthetic and integrated with the GitHub API for real-time status tracking.
 
-![Redesign Overhaul](https://img.shields.io/badge/UI-Glassmorphism-cyan)
-![Data Source](https://img.shields.io/badge/Data-GitHub_API-blue)
-![Build Status](https://img.shields.io/badge/Build-Passing-green)
-
----
 
 ## ✨ Key Features
 
