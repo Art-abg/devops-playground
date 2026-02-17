@@ -26,7 +26,7 @@ A high-performance, professional DevOps portfolio application showcasing real-ti
 A dedicated view for repository health featuring:
 - Live activity statistics.
 - Detailed commit history logs.
-- Full deployment timeline with status visualizers.
+- Full deployment timeline with status visualizers.f
 
 ---
 
