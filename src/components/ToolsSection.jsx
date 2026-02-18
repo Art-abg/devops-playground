@@ -7,6 +7,7 @@ import Base64Helper from './tools/Base64Helper';
 import RegexTester from './tools/RegexTester';
 import PasswordGenerator from './tools/PasswordGenerator';
 import HttpReference from './tools/HttpReference';
+import DiffChecker from './tools/DiffChecker';
 import './ToolsSection.css';
 
 const ToolsSection = () => {
@@ -26,6 +27,7 @@ const ToolsSection = () => {
         <JsonYamlConverter />
         <Base64Helper />
         <HttpReference />
+        <DiffChecker />
       </div>
     </div>
   );
