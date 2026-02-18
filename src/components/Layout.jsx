@@ -1,10 +1,21 @@
 /* eslint-disable react/prop-types */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './Layout.css';
 import Terminal from './Terminal';
 
 const Layout = ({ children, activeTab, onTabChange }) => {
   const [terminalOpen, setTerminalOpen] = useState(false);
+
+  // Keyboard shortcut: backtick toggles terminal
+  useEffect(() => {
+    const handler = (e) => {
+      if (e.key === '`' && !['INPUT', 'TEXTAREA'].includes(e.target.tagName)) {
+        setTerminalOpen(prev => !prev);
+      }
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, []);
 
   return (
     <div className="layout">
@@ -48,6 +59,7 @@ const Layout = ({ children, activeTab, onTabChange }) => {
           <button
             className={`terminal-toggle ${terminalOpen ? 'active' : ''}`}
             onClick={() => setTerminalOpen(!terminalOpen)}
+            title="Toggle terminal (` key)"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
             Terminal
@@ -67,6 +79,16 @@ const Layout = ({ children, activeTab, onTabChange }) => {
       <div className={`terminal-drawer ${terminalOpen ? 'open' : ''}`}>
         <Terminal />
       </div>
+
+      <footer className="footer">
+        <div className="footer-left">
+          ◆ <span>DevOps</span>Playground &nbsp;·&nbsp; © {new Date().getFullYear()} Art-abg
+        </div>
+        <div className="footer-links">
+          <a href="https://github.com/Art-abg/devops-playground" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="https://hub.docker.com/" target="_blank" rel="noopener noreferrer">Docker Hub</a>
+        </div>
+      </footer>
     </div>
   );
 };
