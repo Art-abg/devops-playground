@@ -1,50 +1,67 @@
 /* eslint-disable react/prop-types */
+import { useState } from 'react';
 import './SystemLoad.css';
 
+const LANG_COLORS = {
+  JavaScript: '#f1e05a',
+  TypeScript: '#3178c6',
+  CSS: '#563d7c',
+  HTML: '#e34c26',
+  HCL: '#844fba',
+  Dockerfile: '#384d54',
+  Shell: '#89e051',
+  Python: '#3572A5',
+  Go: '#00ADD8',
+  Rust: '#dea584',
+};
+
 const SystemLoad = ({ languages = [] }) => {
-  // Show language breakdown as bars instead of random CPU data
-  const maxPct = languages.length > 0 ? Math.max(...languages.map(l => parseFloat(l.percentage))) : 100;
+  const [hovered, setHovered] = useState(null);
+
+  const placeholders = Array.from({ length: 5 }, (_, i) => ({
+    name: `lang-${i}`,
+    percentage: String(10 + i * 15),
+    placeholder: true,
+  }));
+
+  const items = languages.length > 0 ? languages : placeholders;
 
   return (
     <div className="system-load-container">
       <h3>REPO LANGUAGE BREAKDOWN</h3>
-      {languages.length > 0 ? (
-        <>
-          <div className="chart-wrapper">
-            <div className="bars">
-              {languages.map((lang, i) => (
+      <div className="lang-bars">
+        {items.map((lang, i) => {
+          const color = LANG_COLORS[lang.name] || '#64748b';
+          const pct = parseFloat(lang.percentage);
+          return (
+            <div
+              key={lang.name}
+              className={`lang-bar-row${lang.placeholder ? ' placeholder' : ''}`}
+              onMouseEnter={() => setHovered(lang.name)}
+              onMouseLeave={() => setHovered(null)}
+            >
+              <div className="lang-bar-label">
+                <span className="lang-dot-sm" style={{ background: color }} />
+                <span className="lang-bar-name">{lang.placeholder ? '···' : lang.name}</span>
+              </div>
+              <div className="lang-bar-track">
                 <div
-                  key={lang.name}
-                  className="bar"
-                  style={{ 
-                    height: `${(parseFloat(lang.percentage) / maxPct) * 95}%`,
-                    animationDelay: `${i * 100}ms`,
+                  className="lang-bar-fill"
+                  style={{
+                    width: `${pct}%`,
+                    background: lang.placeholder ? 'rgba(100,116,139,0.2)' : color,
+                    animationDelay: `${i * 80}ms`,
+                    opacity: hovered && hovered !== lang.name ? 0.35 : 1,
                   }}
-                  title={`${lang.name}: ${lang.percentage}%`}
                 />
-              ))}
+              </div>
+              <span className="lang-bar-pct">
+                {lang.placeholder ? '' : `${lang.percentage}%`}
+              </span>
             </div>
-          </div>
-          <div className="metrics-row">
-            {languages.slice(0, 3).map((lang) => (
-              <span key={lang.name}>{lang.name}: {lang.percentage}%</span>
-            ))}
-          </div>
-        </>
-      ) : (
-        <>
-          <div className="chart-wrapper">
-            <div className="bars">
-              {Array.from({ length: 8 }, (_, i) => (
-                <div key={i} className="bar placeholder-bar" style={{ height: `${20 + i * 8}%` }} />
-              ))}
-            </div>
-          </div>
-          <div className="metrics-row">
-            <span>Loading language data...</span>
-          </div>
-        </>
-      )}
+          );
+        })}
+      </div>
     </div>
   );
 };
