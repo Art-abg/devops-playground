@@ -1,43 +1,92 @@
 /* eslint-disable react/prop-types */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './ToolStyles.css';
 
 const Base64Helper = () => {
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [mode, setMode] = useState('encode');
+  const [urlSafe, setUrlSafe] = useState(false);
+  const [error, setError] = useState(null);
+  const [copied, setCopied] = useState(false);
 
-  const process = () => {
+  // Live processing as user types
+  useEffect(() => {
+    if (!input) { setOutput(''); setError(null); return; }
     try {
+      setError(null);
       if (mode === 'encode') {
-        setOutput(btoa(input));
+        let result = btoa(unescape(encodeURIComponent(input)));
+        if (urlSafe) result = result.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+        setOutput(result);
       } else {
-        setOutput(atob(input));
+        let normalized = input;
+        if (urlSafe) {
+          normalized = input.replace(/-/g, '+').replace(/_/g, '/');
+          while (normalized.length % 4) normalized += '=';
+        }
+        setOutput(decodeURIComponent(escape(atob(normalized))));
       }
-    } catch (e) {
-      setOutput('Error: Invalid Input');
+    } catch {
+      setError('Invalid input for ' + (mode === 'encode' ? 'encoding' : 'decoding'));
+      setOutput('');
     }
+  }, [input, mode, urlSafe]);
+
+  const copyOutput = () => {
+    if (!output) return;
+    navigator.clipboard.writeText(output).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    });
+  };
+
+  const switchMode = (newMode) => {
+    setMode(newMode);
+    setInput('');
+    setOutput('');
+    setError(null);
   };
 
   return (
     <div className="tool-card">
       <h3>BASE64_HELPER</h3>
-      <div className="tool-controls">
-        <button className={`tool-btn small ${mode === 'encode' ? 'active' : ''}`} onClick={() => setMode('encode')}>ENCODE</button>
-        <button className={`tool-btn small ${mode === 'decode' ? 'active' : ''}`} onClick={() => setMode('decode')}>DECODE</button>
+      <div className="tool-controls" style={{ flexDirection: 'row', gap: '0.5rem', flexWrap: 'wrap' }}>
+        <button className={`tool-btn small ${mode === 'encode' ? 'active' : ''}`} onClick={() => switchMode('encode')}>ENCODE</button>
+        <button className={`tool-btn small ${mode === 'decode' ? 'active' : ''}`} onClick={() => switchMode('decode')}>DECODE</button>
+        <label style={{ marginLeft: 'auto', fontSize: '0.78rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+          <input
+            type="checkbox"
+            checked={urlSafe}
+            onChange={(e) => setUrlSafe(e.target.checked)}
+          />
+          URL-safe
+        </label>
       </div>
 
-      <textarea 
-        className="tool-input area" 
-        value={input} 
+      <textarea
+        className="tool-input area"
+        value={input}
         onChange={(e) => setInput(e.target.value)}
-        placeholder={`Enter text to ${mode}...`}
+        placeholder={mode === 'encode' ? 'Enter text to encode...' : 'Enter Base64 to decode...'}
+        style={{ minHeight: '90px' }}
       />
-      
-      <button className="tool-btn" onClick={process}>PROCESS</button>
-      
-      <div className="tool-result">
-        <span className="value break-word">{output}</span>
+
+      {error && <div className="tool-error">{error}</div>}
+
+      <div className="tool-result" style={{ position: 'relative' }}>
+        <span className="value break-word" style={{ fontSize: '0.82rem', lineHeight: 1.5 }}>
+          {output || <span style={{ opacity: 0.4 }}>Result appears here as you type…</span>}
+        </span>
+        {output && (
+          <button
+            className="tool-btn small"
+            onClick={copyOutput}
+            style={{ alignSelf: 'flex-end', marginTop: '0.5rem' }}
+          >
+            {copied ? '✓ Copied' : 'Copy'}
+          </button>
+        )}
       </div>
     </div>
   );
