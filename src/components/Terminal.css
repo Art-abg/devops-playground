@@ -73,22 +73,35 @@
 .terminal-line.warning .content { color: var(--accent-amber); }
 .terminal-line.error .content { color: var(--accent-red); }
 
-.terminal-input-line {
-  margin-top: 0.5rem;
+.terminal-line.cmd .content { color: var(--accent-cyan); font-weight: 500; }
+
+.terminal-input-row {
   display: flex;
+  align-items: center;
   gap: 0.5rem;
-  color: var(--accent-cyan);
+  padding: 0.4rem 1rem;
+  background: rgba(0,0,0,0.3);
+  border-top: 1px solid var(--border-subtle);
+  flex-shrink: 0;
 }
 
-.prompt {
-  color: var(--accent-cyan);
-}
-
-.cursor {
-  animation: cursorBlink 1s step-end infinite;
+.terminal-input-field {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
   color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  caret-color: var(--accent-cyan);
+}
+
+.terminal-input-field::placeholder {
+  color: var(--text-muted);
+  opacity: 0.5;
 }
 
 @keyframes cursorBlink {
   50% { opacity: 0; }
 }
+
