@@ -1,37 +1,34 @@
-/* eslint-disable react/prop-types */
-import { useState, useEffect } from 'react';
+  import { useState, useMemo } from 'react';
 import './ToolStyles.css';
 
 const Base64Helper = () => {
   const [input, setInput] = useState('');
-  const [output, setOutput] = useState('');
   const [mode, setMode] = useState('encode');
   const [urlSafe, setUrlSafe] = useState(false);
-  const [error, setError] = useState(null);
   const [copied, setCopied] = useState(false);
 
-  // Live processing as user types
-  useEffect(() => {
-    if (!input) { setOutput(''); setError(null); return; }
+  // Live processing using useMemo
+  const result = useMemo(() => {
+    if (!input) return { output: '', error: null };
     try {
-      setError(null);
       if (mode === 'encode') {
-        let result = btoa(unescape(encodeURIComponent(input)));
-        if (urlSafe) result = result.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
-        setOutput(result);
+        let res = btoa(unescape(encodeURIComponent(input)));
+        if (urlSafe) res = res.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+        return { output: res, error: null };
       } else {
         let normalized = input;
         if (urlSafe) {
           normalized = input.replace(/-/g, '+').replace(/_/g, '/');
           while (normalized.length % 4) normalized += '=';
         }
-        setOutput(decodeURIComponent(escape(atob(normalized))));
+        return { output: decodeURIComponent(escape(atob(normalized))), error: null };
       }
     } catch {
-      setError('Invalid input for ' + (mode === 'encode' ? 'encoding' : 'decoding'));
-      setOutput('');
+      return { output: '', error: 'Invalid input for ' + (mode === 'encode' ? 'encoding' : 'decoding') };
     }
   }, [input, mode, urlSafe]);
+
+  const { output, error } = result;
 
   const copyOutput = () => {
     if (!output) return;
@@ -44,8 +41,6 @@ const Base64Helper = () => {
   const switchMode = (newMode) => {
     setMode(newMode);
     setInput('');
-    setOutput('');
-    setError(null);
   };
 
   return (

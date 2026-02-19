@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useState } from 'react';
 import './ToolStyles.css';
 
@@ -44,7 +43,7 @@ const CidrCalculator = () => {
         netmask: numToIp(maskNum),
         hosts: numHosts > 0 ? numHosts : 0
       });
-    } catch (error) {
+    } catch {
        setResult({ error: 'Invalid CIDR block' });
     }
   };

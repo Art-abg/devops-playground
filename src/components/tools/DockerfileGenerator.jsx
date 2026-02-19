@@ -1,18 +1,14 @@
-/* eslint-disable react/prop-types */
-import { useState, useEffect } from 'react';
+  import { useState, useMemo } from 'react';
 import './ToolStyles.css';
 
 const DockerfileGenerator = () => {
   const [stack, setStack] = useState('node');
   const [version, setVersion] = useState('18-alpine');
   const [port, setPort] = useState('3000');
-  const [dockerfile, setDockerfile] = useState('');
 
-  useEffect(() => {
-    let content = '';
-    
+  const dockerfile = useMemo(() => {
     if (stack === 'node') {
-      content = `# Node.js Dockerfile
+      return `# Node.js Dockerfile
 FROM node:${version}
 
 WORKDIR /app
@@ -25,7 +21,7 @@ COPY . .
 EXPOSE ${port}
 CMD ["npm", "start"]`;
     } else if (stack === 'python') {
-      content = `# Python Dockerfile
+      return `# Python Dockerfile
 FROM python:${version}
 
 WORKDIR /app
@@ -38,7 +34,7 @@ COPY . .
 EXPOSE ${port}
 CMD ["python", "app.py"]`;
     } else if (stack === 'go') {
-      content = `# Go Dockerfile
+      return `# Go Dockerfile
 FROM golang:${version} AS builder
 WORKDIR /app
 COPY . .
@@ -50,8 +46,7 @@ COPY --from=builder /app/main .
 EXPOSE ${port}
 CMD ["./main"]`;
     }
-
-    setDockerfile(content);
+    return '';
   }, [stack, version, port]);
 
   const copyToClipboard = () => {

@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useState, useCallback } from 'react';
 import * as yaml from 'js-yaml';
 import './ToolStyles.css';

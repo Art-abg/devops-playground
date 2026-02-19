@@ -1,5 +1,4 @@
-/* eslint-disable react/prop-types */
-import { useState, useEffect } from 'react';
+  import { useState } from 'react';
 import './ToolStyles.css';
 
 const ChmodCalculator = () => {
@@ -8,8 +7,6 @@ const ChmodCalculator = () => {
     group: { r: true, w: false, x: false },
     other: { r: true, w: false, x: false }
   });
-  const [octal, setOctal] = useState('644');
-  const [symbolic, setSymbolic] = useState('-rw-r--r--');
 
   const updatePermission = (type, action) => {
     setPermissions(prev => ({
@@ -18,35 +15,25 @@ const ChmodCalculator = () => {
     }));
   };
 
-  useEffect(() => {
-    const calculate = (p) => {
-      let oct = 0;
-      if (p.r) oct += 4;
-      if (p.w) oct += 2;
-      if (p.x) oct += 1;
-      return oct;
-    };
+  // Calculate derived values directly
+  const calculate = (p) => (p.r ? 4 : 0) + (p.w ? 2 : 0) + (p.x ? 1 : 0);
+  const o = calculate(permissions.owner);
+  const g = calculate(permissions.group);
+  const ot = calculate(permissions.other);
+  const octal = `${o}${g}${ot}`;
 
-    const o = calculate(permissions.owner);
-    const g = calculate(permissions.group);
-    const ot = calculate(permissions.other);
-
-    setOctal(`${o}${g}${ot}`);
-
-    const sym = [
-      permissions.owner.r ? 'r' : '-',
-      permissions.owner.w ? 'w' : '-',
-      permissions.owner.x ? 'x' : '-',
-      permissions.group.r ? 'r' : '-',
-      permissions.group.w ? 'w' : '-',
-      permissions.group.x ? 'x' : '-',
-      permissions.other.r ? 'r' : '-',
-      permissions.other.w ? 'w' : '-',
-      permissions.other.x ? 'x' : '-'
-    ].join('');
-
-    setSymbolic(`-${sym}`);
-  }, [permissions]);
+  const sym = [
+    permissions.owner.r ? 'r' : '-',
+    permissions.owner.w ? 'w' : '-',
+    permissions.owner.x ? 'x' : '-',
+    permissions.group.r ? 'r' : '-',
+    permissions.group.w ? 'w' : '-',
+    permissions.group.x ? 'x' : '-',
+    permissions.other.r ? 'r' : '-',
+    permissions.other.w ? 'w' : '-',
+    permissions.other.x ? 'x' : '-'
+  ].join('');
+  const symbolic = `-${sym}`;
 
   return (
     <div className="tool-card">

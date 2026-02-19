@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useState } from 'react';
 import './ToolStyles.css';
 
@@ -29,11 +28,7 @@ const PasswordGenerator = () => {
   };
 
   const getStrength = () => {
-    let types = 0;
-    if (includeUpper) types++;
-    if (includeLower) types++;
-    if (includeNumbers) types++;
-    if (includeSymbols) types++;
+    // types variable removed as it was unused
     const charsetSize = (includeUpper ? 26 : 0) + (includeLower ? 26 : 0) + (includeNumbers ? 10 : 0) + (includeSymbols ? 26 : 0);
     const entropy = Math.log2(Math.pow(charsetSize || 1, length));
 
