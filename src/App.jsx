@@ -81,6 +81,50 @@ function App() {
               </div>
             )}
 
+            <div className="quick-actions" style={{ 
+              marginTop: '1.5rem', 
+              display: 'flex', 
+              gap: '12px', 
+              flexWrap: 'wrap' 
+            }}>
+              <button 
+                onClick={() => setActiveTab('tools')} 
+                className="btn-quick"
+                style={{
+                  background: 'rgba(34, 211, 238, 0.1)',
+                  border: '1px solid var(--accent-cyan)',
+                  color: 'var(--accent-cyan)',
+                  padding: '8px 16px',
+                  borderRadius: 'var(--radius-md)',
+                  fontSize: '0.85rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px'
+                }}
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                DevOps Toolkit
+              </button>
+              <button 
+                onClick={() => setActiveTab('monitor')} 
+                className="btn-quick"
+                style={{
+                  background: 'rgba(167, 139, 250, 0.1)',
+                  border: '1px solid var(--accent-purple)',
+                  color: 'var(--accent-purple)',
+                  padding: '8px 16px',
+                  borderRadius: 'var(--radius-md)',
+                  fontSize: '0.85rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px'
+                }}
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                Real-time Monitor
+              </button>
+            </div>
+
             <SystemLoad languages={languages} />
           </div>
 
