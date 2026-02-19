@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import './Layout.css';
 import Terminal from './Terminal';
+import ScrollToTop from './ScrollToTop';
 
 const Layout = ({ children, activeTab, onTabChange }) => {
   const [terminalOpen, setTerminalOpen] = useState(false);
@@ -131,6 +132,8 @@ const Layout = ({ children, activeTab, onTabChange }) => {
           <a href="https://hub.docker.com/" target="_blank" rel="noopener noreferrer">Docker Hub</a>
         </div>
       </footer>
+
+      <ScrollToTop />
     </div>
   );
 };
