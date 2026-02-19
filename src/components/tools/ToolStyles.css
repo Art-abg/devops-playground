@@ -11,9 +11,15 @@
   height: 100%;
   box-sizing: border-box;
   backdrop-filter: var(--blur-glass);
-  transition: border-color var(--transition-default), box-shadow var(--transition-default);
+  transition: border-color var(--transition-default), box-shadow var(--transition-default), background-color 0.3s ease, transform 0.2s ease;
   position: relative;
   overflow: hidden;
+}
+
+.tool-card:hover {
+  border-color: var(--border-hover);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
 }
 
 .tool-card::before {
@@ -26,11 +32,6 @@
   background: var(--gradient-brand);
   opacity: 0;
   transition: opacity var(--transition-default);
-}
-
-.tool-card:hover {
-  border-color: var(--border-hover);
-  box-shadow: var(--shadow-md);
 }
 
 .tool-card:hover::before {
@@ -82,7 +83,8 @@
 .tool-input:focus {
   outline: none;
   border-color: var(--accent-cyan);
-  box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.1);
+  box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.15);
+  background: rgba(0, 0, 0, 0.4);
 }
 
 .tool-input.short {
