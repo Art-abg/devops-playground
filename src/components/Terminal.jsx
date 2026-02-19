@@ -7,14 +7,25 @@ const COMMANDS = {
     { type: 'info', text: 'Available commands:' },
     { type: 'info', text: '  help       — show this help' },
     { type: 'info', text: '  clear      — clear terminal' },
+    { type: 'info', text: '  github     — open project repository' },
+    { type: 'info', text: '  stats      — show toolkit statistics' },
     { type: 'info', text: '  whoami     — show current user' },
     { type: 'info', text: '  date       — show current date/time' },
-    { type: 'info', text: '  uptime     — show fake uptime' },
     { type: 'info', text: '  ls         — list project files' },
-    { type: 'info', text: '  pwd        — print working directory' },
-    { type: 'info', text: '  echo <msg> — print a message' },
     { type: 'info', text: '  ping       — ping the API' },
+    { type: 'info', text: '  version    — show system version' },
   ],
+  github: () => [
+    { type: 'info', text: 'Repository: https://github.com/Art-abg/devops-playground' },
+    { type: 'success', text: 'GitHub link ready.' },
+  ],
+  stats: () => [
+    { type: 'info', text: 'System Statistics:' },
+    { type: 'info', text: '  Tools available: 14' },
+    { type: 'info', text: '  API Status: Connected' },
+    { type: 'success', text: 'All systems operational.' },
+  ],
+  version: () => [{ type: 'info', text: 'v1.2.0-stable (build 2026.02.19)' }],
   whoami: () => [{ type: 'success', text: 'admin (devops-playground)' }],
   date: () => [{ type: 'info', text: new Date().toString() }],
   uptime: () => [{ type: 'info', text: `up ${Math.floor(Math.random() * 30 + 1)} days, load avg: 0.${Math.floor(Math.random() * 50 + 10)}` }],
@@ -25,6 +36,7 @@ const COMMANDS = {
     { type: 'success', text: `64 bytes from api.github.com: time=${Math.floor(Math.random() * 40 + 10)}ms` },
   ],
 };
+
 
 const Terminal = () => {
   const [lines, setLines] = useState([
