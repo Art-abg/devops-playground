@@ -1,11 +1,11 @@
-  import { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
+import { showToast } from '../Toast';
 import './ToolStyles.css';
 
 const Base64Helper = () => {
   const [input, setInput] = useState('');
   const [mode, setMode] = useState('encode');
   const [urlSafe, setUrlSafe] = useState(false);
-  const [copied, setCopied] = useState(false);
 
   // Live processing using useMemo
   const result = useMemo(() => {
@@ -33,8 +33,7 @@ const Base64Helper = () => {
   const copyOutput = () => {
     if (!output) return;
     navigator.clipboard.writeText(output).then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      showToast('Copied to clipboard!', 'success');
     });
   };
 
@@ -79,7 +78,7 @@ const Base64Helper = () => {
             onClick={copyOutput}
             style={{ alignSelf: 'flex-end', marginTop: '0.5rem' }}
           >
-            {copied ? '✓ Copied' : 'Copy'}
+            Copy
           </button>
         )}
       </div>

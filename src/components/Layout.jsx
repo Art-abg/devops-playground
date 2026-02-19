@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import './Layout.css';
 import Terminal from './Terminal';
 import ScrollToTop from './ScrollToTop';
+import Toast from './Toast';
 
 const Layout = ({ children, activeTab, onTabChange }) => {
   const [terminalOpen, setTerminalOpen] = useState(false);
@@ -134,6 +135,7 @@ const Layout = ({ children, activeTab, onTabChange }) => {
       </footer>
 
       <ScrollToTop />
+      <Toast />
     </div>
   );
 };
