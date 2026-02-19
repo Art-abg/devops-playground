@@ -34,6 +34,13 @@ const TOOLS = [
 
 const ToolsSection = () => {
   const [search, setSearch] = useState('');
+  const [recentIds, setRecentIds] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem('recent-tools') || '[]');
+    } catch {
+      return [];
+    }
+  });
 
   const filteredTools = useMemo(() => {
     return TOOLS.filter(tool => 
@@ -41,6 +48,22 @@ const ToolsSection = () => {
       tool.desc.toLowerCase().includes(search.toLowerCase())
     );
   }, [search]);
+
+  const recentTools = useMemo(() => {
+    return recentIds
+      .map(id => TOOLS.find(t => t.id === id))
+      .filter(Boolean)
+      .slice(0, 3);
+  }, [recentIds]);
+
+  const trackToolUsage = (id) => {
+    setRecentIds(prev => {
+      const filtered = prev.filter(item => item !== id);
+      const updated = [id, ...filtered].slice(0, 5);
+      localStorage.setItem('recent-tools', JSON.stringify(updated));
+      return updated;
+    });
+  };
 
   return (
     <div className="tools-section">
@@ -60,9 +83,29 @@ const ToolsSection = () => {
           />
         </div>
       </div>
+
+      {recentTools.length > 0 && !search && (
+        <div className="recent-section">
+          <h3 className="section-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+            Recently Used
+          </h3>
+          <div className="tools-grid recent">
+            {recentTools.map(tool => (
+              <div key={`recent-${tool.id}`} onClick={() => trackToolUsage(tool.id)} className="tool-wrapper">
+                <tool.component />
+              </div>
+            ))}
+          </div>
+          <div className="section-divider" />
+        </div>
+      )}
+
       <div className="tools-grid">
         {filteredTools.map(tool => (
-          <tool.component key={tool.id} />
+          <div key={tool.id} onClick={() => trackToolUsage(tool.id)} className="tool-wrapper">
+            <tool.component />
+          </div>
         ))}
         {filteredTools.length === 0 && (
           <div className="no-results">
@@ -73,6 +116,7 @@ const ToolsSection = () => {
     </div>
   );
 };
+
 
 export default ToolsSection;
 
