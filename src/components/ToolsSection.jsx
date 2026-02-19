@@ -9,6 +9,7 @@ import PasswordGenerator from './tools/PasswordGenerator';
 import HttpReference from './tools/HttpReference';
 import DiffChecker from './tools/DiffChecker';
 import UrlEncoder from './tools/UrlEncoder';
+import UuidGenerator from './tools/UuidGenerator';
 import './ToolsSection.css';
 
 const ToolsSection = () => {
@@ -30,6 +31,7 @@ const ToolsSection = () => {
         <HttpReference />
         <DiffChecker />
         <UrlEncoder />
+        <UuidGenerator />
       </div>
     </div>
   );
