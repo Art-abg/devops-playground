@@ -1,13 +1,14 @@
 import { useState, useCallback } from 'react';
 import * as yaml from 'js-yaml';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
+import { showToast } from '../Toast';
 import './ToolStyles.css';
 
 const JsonYamlConverter = () => {
-  const [input, setInput] = useState('{\n  "name": "devops-playground",\n  "version": "1.0.0",\n  "tags": ["docker", "ci", "react"]\n}');
+  const [input, setInput] = useLocalStorage('json-yaml-input', '{\n  "name": "devops-playground",\n  "version": "1.0.0",\n  "tags": ["docker", "ci", "react"]\n}');
   const [output, setOutput] = useState('');
-  const [mode, setMode] = useState('json2yaml');
+  const [mode, setMode] = useLocalStorage('json-yaml-mode', 'json2yaml');
   const [error, setError] = useState(null);
-  const [copied, setCopied] = useState(false);
 
   const convert = useCallback(() => {
     setError(null);
@@ -29,9 +30,14 @@ const JsonYamlConverter = () => {
   const copyOutput = () => {
     if (!output) return;
     navigator.clipboard.writeText(output).then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      showToast('Copied to clipboard!', 'success');
     });
+  };
+
+  const clearInput = () => {
+    setInput('');
+    setOutput('');
+    showToast('Input cleared', 'info');
   };
 
   const switchMode = (newMode) => {
@@ -43,7 +49,7 @@ const JsonYamlConverter = () => {
   return (
     <div className="tool-card">
       <h3>JSON_YAML_CONVERTER</h3>
-      <div className="tool-controls" style={{ flexDirection: 'row', gap: '0.5rem' }}>
+      <div className="tool-controls" style={{ flexDirection: 'row', gap: '0.5rem', flexWrap: 'wrap' }}>
         <button
           className={`tool-btn small ${mode === 'json2yaml' ? 'active' : ''}`}
           onClick={() => switchMode('json2yaml')}
@@ -56,6 +62,7 @@ const JsonYamlConverter = () => {
         >
           YAML → JSON
         </button>
+        <button className="tool-btn small danger" onClick={clearInput} style={{ marginLeft: 'auto' }}>Clear</button>
       </div>
 
       <div className="converter-grid">
@@ -81,7 +88,7 @@ const JsonYamlConverter = () => {
               onClick={copyOutput}
               style={{ position: 'absolute', top: '0.4rem', right: '0.4rem' }}
             >
-              {copied ? '✓ Copied' : 'Copy'}
+              Copy
             </button>
           )}
         </div>
