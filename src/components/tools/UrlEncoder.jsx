@@ -1,10 +1,10 @@
 import { useState, useMemo } from 'react';
+import { showToast } from '../Toast';
 import './ToolStyles.css';
 
 const UrlEncoder = () => {
   const [input, setInput] = useState('');
   const [mode, setMode] = useState('encode');
-  const [copied, setCopied] = useState(false);
 
   const result = useMemo(() => {
     if (!input) return { output: '', error: null };
@@ -24,17 +24,22 @@ const UrlEncoder = () => {
   const copyOutput = () => {
     if (!output) return;
     navigator.clipboard.writeText(output).then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      showToast('Copied to clipboard!', 'success');
     });
+  };
+
+  const clearInput = () => {
+    setInput('');
+    showToast('Input cleared', 'info');
   };
 
   return (
     <div className="tool-card">
       <h3>URL_ENCODE_DECODE</h3>
-      <div className="tool-controls">
+      <div className="tool-controls" style={{ flexDirection: 'row', gap: '0.5rem', flexWrap: 'wrap' }}>
         <button className={`tool-btn small ${mode === 'encode' ? 'active' : ''}`} onClick={() => setMode('encode')}>ENCODE</button>
         <button className={`tool-btn small ${mode === 'decode' ? 'active' : ''}`} onClick={() => setMode('decode')}>DECODE</button>
+        <button className="tool-btn small danger" onClick={clearInput} style={{ marginLeft: 'auto' }}>Clear</button>
       </div>
 
       <textarea
@@ -57,7 +62,7 @@ const UrlEncoder = () => {
             onClick={copyOutput}
             style={{ alignSelf: 'flex-end', marginTop: '0.5rem' }}
           >
-            {copied ? '✓ Copied' : 'Copy'}
+            Copy
           </button>
         )}
       </div>
