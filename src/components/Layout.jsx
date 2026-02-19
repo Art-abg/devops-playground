@@ -17,6 +17,16 @@ const Layout = ({ children, activeTab, onTabChange }) => {
     return () => window.removeEventListener('keydown', handler);
   }, []);
 
+  // Update document title based on active tab
+  useEffect(() => {
+    const titles = {
+      dashboard: 'Dashboard',
+      tools: 'Toolkit',
+      monitor: 'Monitor'
+    };
+    document.title = `DevOps Playground - ${titles[activeTab] || 'Dashboard'}`;
+  }, [activeTab]);
+
   return (
     <div className="layout">
       {/* Ambient background glow */}
