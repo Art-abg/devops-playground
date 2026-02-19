@@ -11,6 +11,7 @@ import DiffChecker from './tools/DiffChecker';
 import UrlEncoder from './tools/UrlEncoder';
 import UuidGenerator from './tools/UuidGenerator';
 import JwtDecoder from './tools/JwtDecoder';
+import MarkdownPreview from './tools/MarkdownPreview';
 import './ToolsSection.css';
 
 const ToolsSection = () => {
@@ -34,6 +35,7 @@ const ToolsSection = () => {
         <UrlEncoder />
         <UuidGenerator />
         <JwtDecoder />
+        <MarkdownPreview />
       </div>
     </div>
   );
