@@ -1,8 +1,16 @@
-/* eslint-disable react/prop-types */
+import { useState, useEffect } from 'react';
 import './PipelineVisualizer.css';
 
 const PipelineVisualizer = ({ runs = [], loading }) => {
+  const [now, setNow] = useState(() => Date.now());
+
+  useEffect(() => {
+    const interval = setInterval(() => setNow(Date.now()), 60000);
+    return () => clearInterval(interval);
+  }, []);
+
   if (loading) {
+// ... existing loading check ...
     return (
       <div className="pipeline-container">
         <h3>CICD PIPELINE</h3>
@@ -36,7 +44,7 @@ const PipelineVisualizer = ({ runs = [], loading }) => {
   };
 
   const timeAgo = (dateStr) => {
-    const diff = Date.now() - new Date(dateStr).getTime();
+    const diff = now - new Date(dateStr).getTime();
     const mins = Math.floor(diff / 60000);
     if (mins < 60) return `${mins}m ago`;
     const hrs = Math.floor(mins / 60);
