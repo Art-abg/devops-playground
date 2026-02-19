@@ -10,6 +10,7 @@ import HttpReference from './tools/HttpReference';
 import DiffChecker from './tools/DiffChecker';
 import UrlEncoder from './tools/UrlEncoder';
 import UuidGenerator from './tools/UuidGenerator';
+import JwtDecoder from './tools/JwtDecoder';
 import './ToolsSection.css';
 
 const ToolsSection = () => {
@@ -32,6 +33,7 @@ const ToolsSection = () => {
         <DiffChecker />
         <UrlEncoder />
         <UuidGenerator />
+        <JwtDecoder />
       </div>
     </div>
   );
