@@ -8,6 +8,7 @@ import RegexTester from './tools/RegexTester';
 import PasswordGenerator from './tools/PasswordGenerator';
 import HttpReference from './tools/HttpReference';
 import DiffChecker from './tools/DiffChecker';
+import UrlEncoder from './tools/UrlEncoder';
 import './ToolsSection.css';
 
 const ToolsSection = () => {
@@ -28,6 +29,7 @@ const ToolsSection = () => {
         <Base64Helper />
         <HttpReference />
         <DiffChecker />
+        <UrlEncoder />
       </div>
     </div>
   );
