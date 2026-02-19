@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useState, useMemo } from 'react';
 import './ToolStyles.css';
 

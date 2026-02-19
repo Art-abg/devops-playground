@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useEffect, useRef, useState } from 'react';
 import { getCommits } from '../services/github';
 import './Terminal.css';
