@@ -22,6 +22,13 @@
   transform: translateY(-2px);
 }
 
+.tool-input:focus {
+  outline: none;
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.15);
+  background: rgba(0, 0, 0, 0.4);
+}
+
 .tool-card::before {
   content: '';
   position: absolute;
@@ -80,11 +87,6 @@
   transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
-.tool-input:focus {
-  outline: none;
-  border-color: var(--accent-cyan);
-  box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.15);
-  background: rgba(0, 0, 0, 0.4);
 }
 
 .tool-input.short {
