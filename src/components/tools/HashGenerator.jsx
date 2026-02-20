@@ -19,13 +19,6 @@ const HashGenerator = () => {
     return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
   };
 
-  const md5Hex = (str) => {
-    // Basic MD5 implementation or fallback since crypto.subtle doesn't provide MD5 directly
-    // Since MD5 is complex to implement fully here without a lib, we'll just mock it or skip it,
-    // actually let's just do SHA-1, SHA-256, SHA-384, SHA-512 with native web crypto
-    return "Not supported via WebCrypto natively";
-  };
-
   const computeHashes = useCallback(async () => {
     if (!input) {
       setHashes({
@@ -46,7 +39,7 @@ const HashGenerator = () => {
       ]);
 
       setHashes({ sha1, sha256, sha384, sha512 });
-    } catch (err) {
+    } catch {
       showToast('Error generating hashes', 'error');
     }
   }, [input]);
