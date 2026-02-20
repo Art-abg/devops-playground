@@ -13,6 +13,7 @@ import UrlEncoder from './tools/UrlEncoder';
 import UuidGenerator from './tools/UuidGenerator';
 import JwtDecoder from './tools/JwtDecoder';
 import MarkdownPreview from './tools/MarkdownPreview';
+import HashGenerator from './tools/HashGenerator';
 import './ToolsSection.css';
 
 const TOOLS = [
@@ -30,6 +31,7 @@ const TOOLS = [
   { id: 'uuid', component: UuidGenerator, name: 'UUID Generator', desc: 'Unique identifier creator' },
   { id: 'jwt', component: JwtDecoder, name: 'JWT Decoder', desc: 'Token payload inspector' },
   { id: 'markdown', component: MarkdownPreview, name: 'Markdown Preview', desc: 'Rich text visualization' },
+  { id: 'hash', component: HashGenerator, name: 'Hash Generator', desc: 'Compute hashes (SHA)' },
 ];
 
 const ToolsSection = () => {
