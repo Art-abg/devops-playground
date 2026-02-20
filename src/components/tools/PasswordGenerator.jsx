@@ -8,8 +8,30 @@ const PasswordGenerator = () => {
   const [includeNumbers, setIncludeNumbers] = useState(true);
   const [includeSymbols, setIncludeSymbols] = useState(true);
   const [password, setPassword] = useState('');
-
+  const [mode, setMode] = useState('password'); // 'password' or 'passphrase'
+  const [wordCount, setWordCount] = useState(4);
+  const [separator, setSeparator] = useState('-');
   const generate = () => {
+    if (mode === 'passphrase') {
+      const words = [
+        "apple", "brave", "crane", "drift", "eagle", "flint", "globe", "hover", "index", "joker",
+        "karma", "lemon", "mango", "noble", "oasis", "pearl", "query", "raven", "scale", "train",
+        "ultra", "vivid", "whale", "xenon", "yacht", "zebra", "amber", "brush", "cider", "delta",
+        "earth", "flame", "grape", "heart", "ivory", "juice", "koala", "lunar", "magic", "ninja",
+        "ocean", "panda", "quark", "radar", "solar", "tiger", "umbra", "venom", "water", "x-ray",
+        "yield", "zonal", "alpha", "beta", "gamma", "cliff", "dune", "echo", "frost", "ghost",
+        "hxagon", "igloo", "jazz", "kite", "laser", "maze", "nova", "orbit", "pixel", "quest",
+        "robot", "storm", "turbo", "unity", "vault", "wire", "yeti", "zen", "acorn", "breeze",
+        "cloud", "daisy", "ember", "fern", "grove", "hazel", "iris", "jade", "kiwi", "lotus"
+      ];
+      
+      const array = new Uint32Array(wordCount);
+      crypto.getRandomValues(array);
+      const chosen = Array.from(array, (n) => words[n % words.length]);
+      setPassword(chosen.join(separator));
+      return;
+    }
+
     let charset = '';
     if (includeUpper) charset += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     if (includeLower) charset += 'abcdefghijklmnopqrstuvwxyz';
@@ -28,6 +50,15 @@ const PasswordGenerator = () => {
   };
 
   const getStrength = () => {
+    if (mode === 'passphrase') {
+      // rough entropy: list is 90 words. ~6.5 bits per word.
+      const entropy = wordCount * Math.log2(90);
+      if (entropy >= 80) return { label: 'Very Strong', color: 'var(--accent-green)', pct: 100 };
+      if (entropy >= 50) return { label: 'Strong', color: 'var(--accent-cyan)', pct: 75 };
+      if (entropy >= 30) return { label: 'Medium', color: 'var(--accent-amber)', pct: 50 };
+      return { label: 'Weak', color: 'var(--accent-red)', pct: 25 };
+    }
+
     // types variable removed as it was unused
     const charsetSize = (includeUpper ? 26 : 0) + (includeLower ? 26 : 0) + (includeNumbers ? 10 : 0) + (includeSymbols ? 26 : 0);
     const entropy = Math.log2(Math.pow(charsetSize || 1, length));
@@ -47,51 +78,98 @@ const PasswordGenerator = () => {
   return (
     <div className="tool-card">
       <h3>PASSWORD_GEN</h3>
-      <div className="tool-input-group">
-        <label>Length: {length}</label>
-        <input
-          type="range"
-          min="8"
-          max="64"
-          value={length}
-          onChange={(e) => setLength(parseInt(e.target.value))}
-          style={{ accentColor: 'var(--accent-cyan)', width: '100%' }}
-        />
+      <div className="tool-controls" style={{ marginBottom: '1rem' }}>
+        <button 
+          className={`tool-btn small ${mode === 'password' ? 'active' : ''}`}
+          onClick={() => setMode('password')}
+        >
+          Password
+        </button>
+        <button 
+          className={`tool-btn small ${mode === 'passphrase' ? 'active' : ''}`}
+          onClick={() => setMode('passphrase')}
+        >
+          Passphrase
+        </button>
       </div>
-      <div className="tool-controls">
-        <label>
-          <input 
-            type="checkbox" 
-            checked={includeUpper} 
-            onChange={(e) => setIncludeUpper(e.target.checked)} 
-          />
-          Uppercase (A-Z)
-        </label>
-        <label>
-          <input 
-            type="checkbox" 
-            checked={includeLower} 
-            onChange={(e) => setIncludeLower(e.target.checked)} 
-          />
-          Lowercase (a-z)
-        </label>
-        <label>
-          <input 
-            type="checkbox" 
-            checked={includeNumbers} 
-            onChange={(e) => setIncludeNumbers(e.target.checked)} 
-          />
-          Numbers (0-9)
-        </label>
-        <label>
-          <input 
-            type="checkbox" 
-            checked={includeSymbols} 
-            onChange={(e) => setIncludeSymbols(e.target.checked)} 
-          />
-          Symbols (!@#$...)
-        </label>
-      </div>
+
+      {mode === 'password' ? (
+        <>
+          <div className="tool-input-group">
+            <label>Length: {length}</label>
+            <input
+              type="range"
+              min="8"
+              max="64"
+              value={length}
+              onChange={(e) => setLength(parseInt(e.target.value))}
+              style={{ accentColor: 'var(--accent-cyan)', width: '100%' }}
+            />
+          </div>
+          <div className="tool-controls">
+            <label>
+              <input 
+                type="checkbox" 
+                checked={includeUpper} 
+                onChange={(e) => setIncludeUpper(e.target.checked)} 
+              />
+              Uppercase (A-Z)
+            </label>
+            <label>
+              <input 
+                type="checkbox" 
+                checked={includeLower} 
+                onChange={(e) => setIncludeLower(e.target.checked)} 
+              />
+              Lowercase (a-z)
+            </label>
+            <label>
+              <input 
+                type="checkbox" 
+                checked={includeNumbers} 
+                onChange={(e) => setIncludeNumbers(e.target.checked)} 
+              />
+              Numbers (0-9)
+            </label>
+            <label>
+              <input 
+                type="checkbox" 
+                checked={includeSymbols} 
+                onChange={(e) => setIncludeSymbols(e.target.checked)} 
+              />
+              Symbols (!@#$...)
+            </label>
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="tool-input-group">
+            <label>Word Count: {wordCount}</label>
+            <input
+              type="range"
+              min="3"
+              max="12"
+              value={wordCount}
+              onChange={(e) => setWordCount(parseInt(e.target.value))}
+              style={{ accentColor: 'var(--accent-cyan)', width: '100%' }}
+            />
+          </div>
+          <div className="tool-input-group">
+            <label>Separator:</label>
+            <select 
+              className="tool-input" 
+              value={separator} 
+              onChange={(e) => setSeparator(e.target.value)}
+            >
+              <option value="-">Hyphen (-)</option>
+              <option value="_">Underscore (_)</option>
+              <option value=".">Period (.)</option>
+              <option value=" ">Space ( )</option>
+              <option value="">None</option>
+            </select>
+          </div>
+        </>
+      )}
 
       {/* Strength meter */}
       <div style={{ marginTop: '0.25rem' }}>

@@ -13,6 +13,7 @@ import UrlEncoder from './tools/UrlEncoder';
 import UuidGenerator from './tools/UuidGenerator';
 import JwtDecoder from './tools/JwtDecoder';
 import MarkdownPreview from './tools/MarkdownPreview';
+import HashGenerator from './tools/HashGenerator';
 import './ToolsSection.css';
 
 const TOOLS = [
@@ -30,6 +31,7 @@ const TOOLS = [
   { id: 'uuid', component: UuidGenerator, name: 'UUID Generator', desc: 'Unique identifier creator' },
   { id: 'jwt', component: JwtDecoder, name: 'JWT Decoder', desc: 'Token payload inspector' },
   { id: 'markdown', component: MarkdownPreview, name: 'Markdown Preview', desc: 'Rich text visualization' },
+  { id: 'hash', component: HashGenerator, name: 'Hash Generator', desc: 'Compute hashes (SHA)' },
 ];
 
 const ToolsSection = () => {
@@ -37,6 +39,13 @@ const ToolsSection = () => {
   const [recentIds, setRecentIds] = useState(() => {
     try {
       return JSON.parse(localStorage.getItem('recent-tools') || '[]');
+    } catch {
+      return [];
+    }
+  });
+  const [favoriteIds, setFavoriteIds] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem('favorite-tools') || '[]');
     } catch {
       return [];
     }
@@ -53,8 +62,15 @@ const ToolsSection = () => {
     return recentIds
       .map(id => TOOLS.find(t => t.id === id))
       .filter(Boolean)
+      .filter(t => !favoriteIds.includes(t.id)) // Don't show favorites in recent
       .slice(0, 3);
-  }, [recentIds]);
+  }, [recentIds, favoriteIds]);
+
+  const favoriteTools = useMemo(() => {
+    return favoriteIds
+      .map(id => TOOLS.find(t => t.id === id))
+      .filter(Boolean);
+  }, [favoriteIds]);
 
   const trackToolUsage = (id) => {
     setRecentIds(prev => {
@@ -64,6 +80,31 @@ const ToolsSection = () => {
       return updated;
     });
   };
+
+  const toggleFavorite = (e, id) => {
+    e.stopPropagation();
+    setFavoriteIds(prev => {
+      const isFav = prev.includes(id);
+      const updated = isFav ? prev.filter(item => item !== id) : [...prev, id];
+      localStorage.setItem('favorite-tools', JSON.stringify(updated));
+      return updated;
+    });
+  };
+
+  const renderTool = (tool, isFav) => (
+    <div key={`${isFav ? 'fav' : 'reg'}-${tool.id}`} onClick={() => trackToolUsage(tool.id)} className="tool-wrapper" style={{ position: 'relative' }}>
+      <button 
+        className={`favorite-btn ${isFav ? 'active' : ''}`}
+        onClick={(e) => toggleFavorite(e, tool.id)}
+        title={isFav ? "Remove from favorites" : "Add to favorites"}
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill={isFav ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+        </svg>
+      </button>
+      <tool.component />
+    </div>
+  );
 
   return (
     <div className="tools-section">
@@ -84,6 +125,21 @@ const ToolsSection = () => {
         </div>
       </div>
 
+      {favoriteTools.length > 0 && !search && (
+        <div className="favorite-section">
+          <h3 className="section-title" style={{ color: 'var(--accent-amber)' }}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none" style={{ marginRight: '0.2rem' }}>
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+            Favorites
+          </h3>
+          <div className="tools-grid">
+            {favoriteTools.map(tool => renderTool(tool, true))}
+          </div>
+          <div className="section-divider" />
+        </div>
+      )}
+
       {recentTools.length > 0 && !search && (
         <div className="recent-section">
           <h3 className="section-title">
@@ -91,22 +147,14 @@ const ToolsSection = () => {
             Recently Used
           </h3>
           <div className="tools-grid recent">
-            {recentTools.map(tool => (
-              <div key={`recent-${tool.id}`} onClick={() => trackToolUsage(tool.id)} className="tool-wrapper">
-                <tool.component />
-              </div>
-            ))}
+            {recentTools.map(tool => renderTool(tool, favoriteIds.includes(tool.id)))}
           </div>
           <div className="section-divider" />
         </div>
       )}
 
       <div className="tools-grid">
-        {filteredTools.map(tool => (
-          <div key={tool.id} onClick={() => trackToolUsage(tool.id)} className="tool-wrapper">
-            <tool.component />
-          </div>
-        ))}
+        {filteredTools.map(tool => renderTool(tool, favoriteIds.includes(tool.id)))}
         {filteredTools.length === 0 && (
           <div className="no-results">
             No tools found matching &quot;{search}&quot;

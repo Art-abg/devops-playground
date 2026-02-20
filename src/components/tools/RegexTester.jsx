@@ -1,6 +1,15 @@
 import { useState } from 'react';
 import './ToolStyles.css';
 
+const COMMON_PATTERNS = [
+  { label: 'Custom', pattern: '', flags: 'g' },
+  { label: 'Email Address', pattern: '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}', flags: 'g' },
+  { label: 'IPv4 Address', pattern: '\\b(?:[0-9]{1,3}\\.){3}[0-9]{1,3}\\b', flags: 'g' },
+  { label: 'URL', pattern: 'https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)', flags: 'g' },
+  { label: 'UUID v4', pattern: '[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}', flags: 'g' },
+  { label: 'MAC Address', pattern: '^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$', flags: 'g' }
+];
+
 const RegexTester = () => {
   const [pattern, setPattern] = useState('\\b\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\b');
   const [flags, setFlags] = useState('g');
@@ -37,6 +46,26 @@ const RegexTester = () => {
   return (
     <div className="tool-card">
       <h3>REGEX_TESTER</h3>
+      
+      <div className="tool-input-group">
+        <label>Common Patterns:</label>
+        <select 
+          className="tool-input"
+          onChange={(e) => {
+            const selected = COMMON_PATTERNS.find(p => p.label === e.target.value);
+            if (selected && selected.label !== 'Custom') {
+              setPattern(selected.pattern);
+              setFlags(selected.flags);
+            }
+          }}
+          defaultValue="Custom"
+        >
+          {COMMON_PATTERNS.map(p => (
+            <option key={p.label} value={p.label}>{p.label}</option>
+          ))}
+        </select>
+      </div>
+
       <div className="tool-input-group">
         <label>Pattern:</label>
         <div className="input-row">

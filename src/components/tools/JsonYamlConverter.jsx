@@ -34,6 +34,21 @@ const JsonYamlConverter = () => {
     });
   };
 
+  const downloadOutput = () => {
+    if (!output) return;
+    const ext = mode === 'json2yaml' ? 'yaml' : 'json';
+    const blob = new Blob([output], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `converted.${ext}`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    showToast(`Downloaded converted.${ext}`, 'success');
+  };
+
   const clearInput = () => {
     setInput('');
     setOutput('');
@@ -83,13 +98,20 @@ const JsonYamlConverter = () => {
             style={{ minHeight: '140px', width: '100%', boxSizing: 'border-box' }}
           />
           {output && (
-            <button
-              className="tool-btn small copy-btn"
-              onClick={copyOutput}
-              style={{ position: 'absolute', top: '0.4rem', right: '0.4rem' }}
-            >
-              Copy
-            </button>
+            <div style={{ position: 'absolute', top: '0.4rem', right: '0.4rem', display: 'flex', gap: '0.4rem' }}>
+              <button
+                className="tool-btn small copy-btn"
+                onClick={copyOutput}
+              >
+                Copy
+              </button>
+              <button
+                className="tool-btn small copy-btn"
+                onClick={downloadOutput}
+              >
+                Download
+              </button>
+            </div>
           )}
         </div>
       </div>

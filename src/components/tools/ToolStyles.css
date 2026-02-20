@@ -1,10 +1,24 @@
 /* ===== TOOL CARD ===== */
 .tool-card {
-  /* ... existing styles ... */
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  padding: 1.5rem;
+  border-radius: var(--radius-lg);
+  color: var(--text-primary);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: 100%;
+  box-sizing: border-box;
+  backdrop-filter: var(--blur-glass);
   transition: border-color var(--transition-default), box-shadow var(--transition-default), background-color 0.3s ease, transform 0.2s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .tool-card:hover {
+  border-color: var(--border-hover);
+  box-shadow: var(--shadow-md);
   transform: translateY(-2px);
 }
 
@@ -25,11 +39,6 @@
   background: var(--gradient-brand);
   opacity: 0;
   transition: opacity var(--transition-default);
-}
-
-.tool-card:hover {
-  border-color: var(--border-hover);
-  box-shadow: var(--shadow-md);
 }
 
 .tool-card:hover::before {
@@ -78,10 +87,6 @@
   transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
-.tool-input:focus {
-  outline: none;
-  border-color: var(--accent-cyan);
-  box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.1);
 }
 
 .tool-input.short {
@@ -144,6 +149,33 @@
 .tool-btn.small.danger:hover {
   background: rgba(239, 68, 68, 0.15);
   border-color: var(--accent-red);
+}
+
+/* ===== FAVORITE BUTTON ===== */
+.favorite-btn {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+  z-index: 10;
+}
+
+.favorite-btn:hover {
+  color: var(--accent-amber);
+  background: rgba(251, 191, 36, 0.1);
+}
+
+.favorite-btn.active {
+  color: var(--accent-amber);
 }
 
 /* ===== RESULTS ===== */
