@@ -149,6 +149,33 @@
   border-color: var(--accent-red);
 }
 
+/* ===== FAVORITE BUTTON ===== */
+.favorite-btn {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+  z-index: 10;
+}
+
+.favorite-btn:hover {
+  color: var(--accent-amber);
+  background: rgba(251, 191, 36, 0.1);
+}
+
+.favorite-btn.active {
+  color: var(--accent-amber);
+}
+
 /* ===== RESULTS ===== */
 .tool-result {
   background: rgba(0, 0, 0, 0.25);
